@@ -1,0 +1,9 @@
+a {
+  width: 100px;  
+  margin: 20px;
+  font-size: medium;
+}
+.btn-responsive {
+  white-space: normal !important;
+  word-wrap: break-word;
+}

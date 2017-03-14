@@ -1,0 +1,16 @@
+{
+"vocabulary": [
+    {
+    "word": "hedgehog",
+    "transcription": "ˈhɛdʒ(h)ɒɡ",
+    "translation": "еж",
+    "associations": "ежик сидит на голове Хичкока",
+    "phrase": "the hedgehog rolled itself into a ball",
+    "theme": "животные",
+    "image": "http://www.astromeridian.ru/sonnik/2550.html",
+    "share": false,
+    "learned": false
+    }
+],
+"theme": ["животные"]
+}
