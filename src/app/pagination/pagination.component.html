@@ -1,0 +1,14 @@
+<div>
+    <ul  *ngIf="pages.length>1">
+        <li *ngIf="pages[0]!=1">
+            <span class="action-btn" (click)="moveBack()">&#60; Prev</span>
+        </li>
+        <li *ngFor="let currentPage of pages" (click)="getPageOfWords(currentPage, $event)">
+            <span *ngIf="currentPage==1" style="background-color: gray" class="page{{currentPage}}">{{currentPage}}</span> 
+            <span *ngIf="currentPage!=1" class="page{{currentPage}}">{{currentPage}}</span> 
+        </li>
+        <li *ngIf="pages[pages.length-1]!=pagesCount">
+            <span class="action-btn" (click)="moveForward()">Next &#62;</span>
+        </li>
+    </ul>
+</div>

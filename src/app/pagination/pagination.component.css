@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+}
+
+li {
+    float: left;
+}
+
+span {
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  background-color: #dddddd;
+}
+
+.action-btn 
+  width: 40px;  
+}

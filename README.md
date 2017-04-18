@@ -1,1 +1,1 @@
-# personal-vocabulary
+# vocabulary

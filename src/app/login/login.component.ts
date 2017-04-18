@@ -14,11 +14,11 @@ import 'rxjs/add/operator/map';
 })
 
 export class LoginComponent implements  OnInit {
-    private url = 'https://blooming-lowlands-46132.herokuapp.com/login';
-    public loginForm: FormGroup;
+    private loginForm: FormGroup;
+    private message: string;
     
     constructor(
-        public fb: FormBuilder, 
+        private fb: FormBuilder, 
         private router: Router,
         private exchangeDataService: ExchangeDataService) {
     }
@@ -46,12 +46,34 @@ export class LoginComponent implements  OnInit {
         this.exchangeDataService.askServerLoginUser(body)
             .subscribe(
                 (data: any) => {
-//                    console.log(data.message);
                     if (data.message === "Success") {
-                        this.router.navigate(['/vacabulary']);
+                        this.message = data.body;
+
+                        if (!this.supportsLocalStorage()) {
+                            console.log("no support localStorage");
+                        } else {
+                            if (data.token) {
+    //                            console.log("data.token " + data.token);
+                                if (!localStorage.getItem('token')) {
+                                    localStorage.setItem("token", data.token); 
+                                }
+                                console.log("localStorage from login  " + JSON.stringify(localStorage));   
+
+                                setTimeout(() => {
+                                    this.router.navigate(['/personal-vocabulary']);
+//                                    this.router.navigate(['/test']);
+                                }, 1000);
+                            }
+                        }
+                    } else {
+                       this.message = data.body;
                     }
                 },
                 (error: any) => console.log(<any>error)
             );
+    }
+
+    supportsLocalStorage() {
+        return typeof(Storage)!== 'undefined';
     }
 }

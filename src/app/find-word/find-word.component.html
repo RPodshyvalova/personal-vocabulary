@@ -1,0 +1,25 @@
+<div>
+    <p class="large-txt">Find word</p>
+    <form [formGroup]="findForm" (ngSubmit)="findWord()">
+        <input id="word" type="text" class="form-control" formControlName="word">
+        
+        <div class="form-group radio">
+            <h4>Where does search:</h4>
+            <label class="center-block">
+                <input type="radio"  formControlName="vocabulary" [checked]="true" value="own">in my own vocabulary
+            </label>
+            <label class="center-block">
+                <input type="radio" formControlName="vocabulary" value="common">in common vocabulary
+            </label>
+            <label class="center-block">
+                <input type="radio" formControlName="vocabulary" value="both">in both
+            </label>
+        </div>
+       
+        <button type="submit" class="btn btn-primary btn-lg">Find</button>
+    </form>
+    <p>form value: {{findForm.value | json}}</p>
+    <div *ngIf="wordsInfo">
+        <word [word]="wordsInfo"></word> 
+    </div>
+</div>

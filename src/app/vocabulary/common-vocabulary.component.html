@@ -1,0 +1,12 @@
+<navigation-menu class="navigation-block"></navigation-menu>
+
+<div class="title-block">
+    <p class="text-center large-txt">Vocabulary</p>
+</div> 
+
+<div class="vocabulary-block">
+    <div *ngFor="let word of commonVocabulary" >
+        <word [word]="word"></word> 
+    </div>   
+    <pagination (onChanged)="onChanged($event)"></pagination>
+</div>

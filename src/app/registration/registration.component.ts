@@ -1,70 +1,69 @@
-import {Component, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CustomValidationService } from '../services/custom-validation.service';
-import { ExchangeDataService } from '../services/exchange-data.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import {Component, OnInit} from "@angular/core";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
+
+import {CustomValidationService} from "../services/custom-validation.service";
+import {ExchangeDataService} from "../services/exchange-data.service";
 
 @Component({
-    selector: 'registration-form',
-    templateUrl: 'registration.component.html',
-    styleUrls: ['registration.component.css']
+    selector: "registration-form",
+    templateUrl: "registration.component.html",
+    styleUrls: ["registration.component.css"]
 })
 
 export class RegistrationComponent implements OnInit {
-    public registrationForm: FormGroup;
+    private registrationForm: FormGroup;
 
     constructor(
-        public fb: FormBuilder, 
+        private fb: FormBuilder, 
         private router: Router, 
-        //private http: Http, 
+        private customValidationService: CustomValidationService,
         private exchangeDataService: ExchangeDataService) {
     }
   
     ngOnInit(): void {
         this.registrationForm = this.fb.group({
-            login: ["", [
+            login: ["", Validators.compose([
                 Validators.required,  
                 Validators.minLength(6), 
                 Validators.maxLength(15),
-                CustomValidationService.checkCorrectIdentifier] //sync validation
-               // [CustomValidationService.checkUniqueLogin] //async validation
+                CustomValidationService.checkCorrectIdentifier]), //sync validation
+//                [this.customValidationService.checkUniqueLogin] //async validation
             ],
-            name: ["", [
+            name: ["", Validators.compose([
                 Validators.minLength(6), 
                 Validators.maxLength(15),
-                CustomValidationService.checkCorrectIdentifier]
+                CustomValidationService.checkCorrectIdentifier])
             ],
-            email: ["", [
+            email: ["", Validators.compose([
                 Validators.required,
-                CustomValidationService.checkCorrectEmail] //sync validation
-                // [CustomValidationService.checkUniqueEmail] //async validation
+                CustomValidationService.checkCorrectEmail]), //sync validation
+//                [this.customValidationService.checkUniqueEmail] //async validation
             ],
             passwordgroup: this.fb.group({
-                password: ["", [
+                password: ["", Validators.compose([
                     Validators.required,
-                    Validators.minLength(3), 
-                    Validators.maxLength(15)]
+                    Validators.minLength(6), 
+                    Validators.maxLength(15)])
                 ],
                 password_confirmation: ""
-            },  { validator: CustomValidationService.passwordConfirm })
+            },  {validator: CustomValidationService.passwordConfirm})
             
         });
     }
 
     registerUser() {
         let formValuesObj = this.registrationForm.value;
-//        console.log(JSON.stringify(formValuesObj));
-        let body = JSON.stringify(formValuesObj).replace('"passwordgroup":{','').replace(/}\s*$/, "");
-//        console.log(body);
+        let body = JSON.stringify(formValuesObj).replace('"passwordgroup":{',"").replace(/}\s*$/, "");
         this.exchangeDataService.askServerRegisterUser(body)
             .subscribe(
                 (data: any) => {                   
                     console.log(data.message);
                     if (data.message === "Success") {
-                        this.router.navigate(['/login']);
+                        this.router.navigate(["/login"]);
                     }
                 },
                 (error: any) => console.log(<any>error)

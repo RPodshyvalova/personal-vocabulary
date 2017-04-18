@@ -1,0 +1,44 @@
+<div>
+    <div class="title-block">
+        <h1>Add new word</h1>
+    </div> 
+    <div class="new-word-form">
+        <form [formGroup]="wordForm" (ngSubmit)="$event.preventDefault(); addWord();"  novalidate>
+            <input type="text" class="form-control" placeholder="Word" formControlName="name">
+            <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
+                <div 
+                    *ngIf="wordForm.controls['name'].errors.required"
+                    class="alert alert-danger">Word is required.</div>
+            </div>     
+            <input type="text" class="form-control" placeholder="Transcription" formControlName="transcription">
+            <trascription-panel  (onChanged)="onChanged($event)"></trascription-panel>
+            <input type="text" class="form-control" placeholder="Translation" formControlName="translation">
+            <input type="text" class="form-control" placeholder="associations" formControlName="associate">
+            <input type="text" class="form-control" placeholder="Phrase" formControlName="phrase">
+            <label>Theme:
+                <select class="form-control" formControlName="theme_name">
+                    <option *ngFor="let theme of themesList" [value]="theme.name">{{theme.name}}</option>
+                </select>
+            </label>
+
+            <label for="share">share
+                <input type="text" class="form-control" formControlName="share" id="share">
+            </label>
+            <label for="learned">learned
+                <input type="checkbox" class="form-control" formControlName="learned" id="learned">
+            </label>
+            <div *ngIf="wordFromVocabulary">
+                <img src="{{word.image}}" alt="{{word.image}}">
+            </div>
+            <label>Image:
+                <img #image src="{{word?.image}}"><br>
+                <input type="file" class="btn btn-success" (change)="addImage($event)" placeholder="Upload image..." />
+            </label>  
+            <button type="submit" (click)="addWord()"
+                [disabled]="wordForm.pristine" class="btn btn-success">Save</button> &nbsp;
+            <button type="reset" (click)="cancel()"
+                [disabled]="wordForm.pristine" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+</div>
+<p>Info: {{ wordForm.value | json}}</p>

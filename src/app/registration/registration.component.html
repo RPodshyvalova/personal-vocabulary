@@ -21,7 +21,11 @@
                         class="alert alert-danger">Login length must be less than {{registrationForm.controls['login'].errors.maxlength.requiredLength}} symbols.</div>    
                     <div 
                         *ngIf="registrationForm.controls['login'].errors.checkCorrectIdentifier"
-                        class="alert alert-danger">Login contains wrong symbols.</div>    
+                        class="alert alert-danger">Login contains wrong symbols.</div>
+                    <div 
+                        *ngIf="registrationForm.controls['login'].errors?.checkUniqueLogin"
+                        class="alert alert-danger">Login already exists, please choose another login.</div>     
+
                 </div>      
             </div>
         </div> 
@@ -54,7 +58,11 @@
                         class="alert alert-danger">Email is required.</div>
                     <div 
                         *ngIf="registrationForm.controls['email'].errors.checkCorrectEmail"
-                        class="alert alert-danger">Email hasn't incorrect format.</div>    
+                        class="alert alert-danger">Email hasn't incorrect format.</div>
+                    <div 
+                        *ngIf="registrationForm.controls['email'].errors?.checkUniqueEmail"
+                        class="alert alert-danger">Email already registered, please choose another email.</div>     
+
                 </div>      
             </div>
         </div>

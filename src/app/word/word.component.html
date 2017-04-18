@@ -1,1 +1,54 @@
-<section></section>
+<div class="word-block">
+    <form [formGroup]="wordForm">
+        <input type="text" class="form-control word" formControlName="name">
+        <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
+            <div 
+                *ngIf="wordForm.controls['name'].errors.required"
+                class="alert alert-danger">Word is required.</div>
+        </div>                    
+        <span *ngIf="showDescriptionOfWord">
+            <input type="text" class="form-control transcription" formControlName="transcription">
+        </span> 
+        <input type="text" class="form-control translation" formControlName="translation">
+        <span *ngIf="showDescriptionOfWord">
+            <input type="text" class="form-control" formControlName="associate">
+            <input type="text" class="form-control" formControlName="phrase">
+            <select class="form-control" formControlName="theme_name">
+                <option [selected]="true"> {{word.theme}}</option>
+            </select>
+            <div class="share">
+                <input type="checkbox" class="form-control" formControlName="share" id="share">
+                <label for="share">share</label>
+            </div>    
+            <div class="learned">
+                <input type="checkbox" class="form-control" formControlName="learned" id="learned">
+                <label for="learned">learned</label>
+            </div>
+            <div class="image">
+                <label>Image:
+                   <img #image src="{{word?.image}}" alt="image"><br>
+                   <input type="file" class="btn btn-success" (change)="addImage($event)" placeholder="Upload image..." />
+                </label>  
+            </div>
+            <div>
+                <button type="button" (click)="editWord($event);"
+                    class="btn btn-success">Edit</button> &nbsp;
+                <button type="button" (click)="saveChanges($event);"
+                    class="btn btn-success">Save</button> &nbsp;
+                <button type="button" (click)="deleteWord($event);"
+                    class="btn btn-danger">Delete</button>
+            </div>   
+        </span>
+        <div class="more-info" (click)="toggle()">
+            <i 
+                class="pull-right glyphicon" 
+                [ngClass]="
+                    { 
+                        'glyphicon-chevron-down': !showDescriptionOfWord, 
+                        'glyphicon-chevron-up': showDescriptionOfWord 
+                    }">
+            </i>
+        </div>    
+    </form>
+    <p>Info: {{ wordForm.value | json}}</p>
+</div>

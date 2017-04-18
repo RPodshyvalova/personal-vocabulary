@@ -1,4 +1,4 @@
-<section class="login-block">
+<div class="login-block">
     <div class="slogan-block ">
         <p class="text-muted">Store your learning foreign words <br><span>in</span></p>
         <p class="large-txt">your personal vocabulary</p>
@@ -54,5 +54,9 @@
     <div class="registration-block col-sm-3 pull-right">
         <a routerLink="/registration" class="text-danger">or Registration</a>
     </div>
-</section>
+    
+    <div *ngIf="message">
+        {{message}}
+    </div>    
+</div>
     

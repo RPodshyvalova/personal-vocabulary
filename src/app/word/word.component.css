@@ -1,0 +1,36 @@
+.word-block {
+  border: 1px solid lightgray;
+  margin-top: 10px;
+}
+.word {
+  width: 25%;
+  color: lightgreen;
+  margin: 10px;
+}
+.translation {
+  width: 25%;
+  color: orange; 
+  margin: 10px;
+}
+.transcription {
+  width: 25%;
+  color: darkgray; 
+  margin: 10px;
+}
+img {
+  width: 200px;  
+  height: 200px;
+}
+.share{
+  width: 25%; 
+}
+.learned {
+  width: 25%;  
+}
+.image{
+  width: 100%;  
+}
+.more-info{
+  width: 100%;  
+  background: lightgray;
+}
