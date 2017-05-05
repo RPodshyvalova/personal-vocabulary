@@ -1,0 +1,19 @@
+.row {
+  margin-top: 2%;
+}
+
+h3,h4,h5 {
+  text-align: center;
+}
+
+h3 {
+  font-weight: 800;    
+}
+
+button {
+  margin-top: 5%;
+}
+
+.title {
+  margin-top: 10%;     
+}

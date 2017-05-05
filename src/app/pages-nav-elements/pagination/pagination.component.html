@@ -1,0 +1,16 @@
+<div>
+    <nav aria-label="Page navigation">
+        <ul  *ngIf="pages.length>1" class="pagination">
+            <li *ngIf="pages[0]!=1">
+                <span aria-hidden="true" (click)="moveBack()">&laquo;</span>
+            </li>
+            <li *ngFor="let currentPage of pages" (click)="getPageOfWords(currentPage, $event)">
+                <span *ngIf="currentPage==1" style="background-color: #b3d9ff" class="page{{currentPage}}">{{currentPage}}</span> 
+                <span *ngIf="currentPage!=1" class="page{{currentPage}}">{{currentPage}}</span> 
+            </li>
+            <li *ngIf="pages[pages.length-1]!=pagesCount">
+                <span aria-hidden="true"(click)="moveForward()">&raquo;</span>
+            </li>
+        </ul>
+    </nav>
+</div>

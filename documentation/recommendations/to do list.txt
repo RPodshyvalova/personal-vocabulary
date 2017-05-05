@@ -1,0 +1,12 @@
+done
++ url to server make like var environment in config
++ picture send to server in json like base64
++ reorganize components structure in project - union them by logic
++ divide exchange-service to several services by logic
+
+hope to do
+1)make modules Status word.module.ts and vocabulary.module
+2)colorize elements html in pagination component do like an  element's style
+3)colorize elements html in navigation component, do like an element's style
+4)validation do like separate component
+

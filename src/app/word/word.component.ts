@@ -1,7 +1,8 @@
 import {Component, OnInit, Input,  ElementRef, ViewChild} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Subscription} from 'rxjs/Rx';
 import {Word} from "../models/word";
-import {ExchangeDataService} from "../services/exchange-data.service";
+import {ApiService} from '../services/api.service';
 
 @Component({
     selector: "word",
@@ -10,16 +11,19 @@ import {ExchangeDataService} from "../services/exchange-data.service";
 })
 
 export class WordComponent implements OnInit {
+    private url: string;
     private wordForm: FormGroup;
     private showDescriptionOfWord: boolean = false;
     private filesToUpload: Array<File>;
     private formData: FormData;
-    @ViewChild('image') image: ElementRef;
+    private imageLikeBase64: string = ""; 
+    private subscription: Subscription;
+    @ViewChild("image") image: ElementRef;
     @Input() word: Word;
     
     constructor(
         private fb: FormBuilder, 
-        private exchangeDataService: ExchangeDataService) {
+        private apiService: ApiService) {
     }
     
     ngOnInit(): void {
@@ -61,26 +65,25 @@ export class WordComponent implements OnInit {
         this.setEnableFormElements();
     }
     
-    saveChanges(event: any){
+    changeWord(event: any) {
+        this.url = "/api/v1/words/edit";
         event.stopPropagation();
-        console.log("word from editWord() " + JSON.stringify(this.word));   
-        console.log(JSON.stringify(this.wordForm.value));
-        console.log(this.wordForm.get('name').value);
-        
-       // {"name":"Info","transcription":"[ˌɪnfərˈmeɪʃən]","translation":"Информация","associations":"Knowledge or facts learned, especially about a certain subject or event","phrase":"Information is facts that you learn or discover","theme_name":"City","share":"false","learned":false}
-        
-        this.formData = new FormData();
-        this.formData.append("name", this.wordForm.get('name').value);
-        this.formData.append("transcription", this.wordForm.get('transcription').value);
-        this.formData.append("translation", this.wordForm.get('translation').value);
-        this.formData.append("associate", this.wordForm.get('associate').value);
-        this.formData.append("phrase", this.wordForm.get('phrase').value);
-        this.formData.append("share", this.wordForm.get('share').value);
-        this.formData.append("learned", this.wordForm.get('learned').value);
-        this.formData.append("theme_name", this.wordForm.get('theme_name').value); 
-        this.formData.append("image", this.filesToUpload[0]);         
-        
-        this.exchangeDataService.changeWordInVocabulary(this.formData)
+        let wordObj  =  { 
+            "name": this.wordForm.get("name").value,
+            "transcription": this.wordForm.get("transcription").value,
+            "translation": this.wordForm.get("translation").value,
+            "associate": this.wordForm.get("associate").value,
+            "phrase": this.wordForm.get("phrase").value,
+            "share": this.wordForm.get("share").value,
+            "learned": this.wordForm.get("learned").value,
+            "theme_name": this.wordForm.get("theme_name").value,
+            "image": {
+                    "filename": this.filesToUpload[0].name, 
+                    "data": this.imageLikeBase64.length > 0 ? this.imageLikeBase64 : ""
+                }
+            };
+
+        this.subscription = this.apiService.post(this.url, JSON.stringify(wordObj))
             .subscribe(
                 (data: any) => {
                     console.log(data);
@@ -89,20 +92,34 @@ export class WordComponent implements OnInit {
             ); 
     }
     
-    addImage(fileInput: any) {
+    addImage(fileInput: any): boolean {
         this.filesToUpload = <Array<File>> fileInput.target.files;
-      
+        if (this.filesToUpload[0].size >= 4194304) { //file size must be less then 4mB ( or 5mB = 5242880b ?)
+            console.log("Such a big file. Its more then 4mB");
+           return; 
+        }
+        let newWordConponentLink = this;
         let fileReader = new FileReader();
         let domImage = this.image;
         fileReader.onload = function(event) {
-            domImage.nativeElement.src = this.result;
+            let data = this.result;
+            domImage.nativeElement.src = data;
+            newWordConponentLink.imageLikeBase64 = data;
         }
         fileReader.readAsDataURL(this.filesToUpload[0]);
-        
+        return true;
     }    
-    
+
     deleteWord(event: any) {
         event.stopPropagation();
-        console.log("word from deleteWord() " + this.word.toString());        
+        let wordName = this.wordForm.get("name").value; 
+        this.url = `/api/v1/words/delete?name=${wordName}`;
+        this.subscription = this.apiService.del(this.url) 
+            .subscribe(
+                (data: any) => {
+                    console.log(data);
+                },
+                (error: any)  => console.log(<any>error)
+            );      
     }
 }

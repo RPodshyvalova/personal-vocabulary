@@ -1,6 +1,7 @@
 a {
-  width: 120px;  
-  margin: 20px;
+  width: 100%; 
+  margin-top: 25%;
+  padding: 10%;
   font-size: medium;
 }
 
@@ -8,4 +9,9 @@ a {
   white-space: normal !important;
   word-wrap: break-word;
   background: lightgray;
+}
+
+.active-link {
+  background: #b3d9ff;   
+  color: darkslategray;
 }

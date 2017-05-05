@@ -19,7 +19,6 @@ export class TranscriptionPanelComponent implements OnInit {
     
     getSymbol(num: number) {
         let index = num++; 
-//        console.log("number is " + index + this.symbols[index] );
         this.change(this.symbols[index]);
     }
 

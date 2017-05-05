@@ -1,22 +1,24 @@
-import {Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ExchangeDataService } from '../services/exchange-data.service';
-import { Word } from '../models/word';
+import {Component, OnInit} from "@angular/core";
+import {FormGroup, FormBuilder} from "@angular/forms";
+import {ApiService} from "../services/api.service";
+import {Word} from "../models/word";
 
 @Component({
-    selector: 'find-word',
-    templateUrl: 'find-word.component.html',
-    styleUrls: ['find-word.component.css']
+    selector: "find-word",
+    templateUrl: "find-word.component.html",
+    styleUrls: ["find-word.component.css"]
 })
 
-export class FindWordComponent implements OnInit {
+export class FindWordComponent implements OnInit{
+    private url: string;
+    private subscription: any;
     private findForm: FormGroup;  
-    private wordsInfo: Word;
-    private wordObjToSend: any = {};
+    private findVocabulary: Word[]; 
+    private wordsParamsObj: any = {};
     
     constructor(
         private fb: FormBuilder, 
-        private exchangeDataService: ExchangeDataService) {
+        private apiService: ApiService) {
     }
     
     ngOnInit(): void {
@@ -28,7 +30,6 @@ export class FindWordComponent implements OnInit {
     
     defineWordsLang(word: string): string {
         let smblsCode = word.toLowerCase().charCodeAt(0);
-        console.log("smbl" + smblsCode);
         if (smblsCode >= 97 && smblsCode <= 122) {
             return "eng";
         } else {
@@ -42,37 +43,24 @@ export class FindWordComponent implements OnInit {
     findWord() {
         let formValuesObj = this.findForm.value;
         let language = this.defineWordsLang(formValuesObj.word);
-        this.wordObjToSend = {
+        this.wordsParamsObj = {
             word: formValuesObj.word,
             lang: language ? language : "",
             vocabulary: formValuesObj.vocabulary // can be "own" or "common" or "both"
         };
         
-        console.log(this.wordObjToSend);
-        this.wordsInfo = {
-            name: "",
-            transcription: "",
-            translation: "",
-            associate: "",
-            phrase: "",
-            theme: "",
-            image: "",
-            share: false,
-            learned: false
-        };
+//        console.log(JSON.stringify(this.wordsParamsObj));
+        this.url =  `/api/v1/words/search?text=${this.wordsParamsObj.word}&lang=${this.wordsParamsObj.lang}`;
+        this.apiService.get(this.url)
+            .subscribe(
+                (data: any) => {
+                    if (data && (data as Word[]).length > 0 ) {
+                        this.findVocabulary = data as Word[];
+                    } else {
+                       console.log("FindWordComponent findVocabulary empty");    
+                    }
+                  },
+                (error: any) => console.log(<any>error)
+            );
     }
-        
-
-           
-//        this.exchangeDataService.askServerFindWord(this.wordObjToSend )
-//            .subscribe(
-//                (data: any) => {
-//                    console.log(data);
-//                    this.wordsInfo = data;
-//                },
-//                (error: any) => console.log(<any>error)
-//            );
-    
-//    }    
-    
 }

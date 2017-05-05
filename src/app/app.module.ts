@@ -1,21 +1,21 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
-import {RegistrationComponent} from "./registration/registration.component";
-import {LoginComponent} from "./login/login.component";
+import {RegistrationComponent} from "./authentication/registration/registration.component";
+import {LoginComponent} from "./authentication/login/login.component";
 import {NewWordComponent} from "./word/new-word.component";
 import {WordComponent} from "./word/word.component";
+import {TranscriptionPanelComponent} from "./word/transcription-panel/transcription-panel.component";
 import {PersonalVocabularyComponent} from "./vocabulary/personal-vocabulary.component";
 import {CommonVocabularyComponent} from "./vocabulary/common-vocabulary.component";
-import {NavigationComponent} from "./navigation/navigation.component";
-import {PaginationComponent} from "./pagination/pagination.component";
-import {TranscriptionPanelComponent} from "./transcription-panel/transcription-panel.component";
-import {RememberWordsComponent} from "./remember-words/remember-words.component";
+import {RememberWordsComponent} from "./vocabulary/remember-words.component";
+import {NavigationComponent} from "./pages-nav-elements/navigation/navigation.component";
+import {PaginationComponent} from "./pages-nav-elements/pagination/pagination.component";
 import {FindWordComponent} from "./find-word/find-word.component";
-import {TestComponent} from "./test/test.component";
+import {HomeComponent} from "./home/home.component";
 
-import {CustomValidationService} from "./services/custom-validation.service";
-import {ExchangeDataService} from "./services/exchange-data.service";
+import {CustomValidationService} from "./authentication/custom-validation.service";
+import {ApiService} from "./services/api.service";
  
 import {HttpModule} from "@angular/http";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -28,7 +28,7 @@ import "bootstrap/dist/css/bootstrap.css";
         BrowserModule,
         HttpModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
     ],
     declarations: [
         AppComponent,
@@ -43,11 +43,11 @@ import "bootstrap/dist/css/bootstrap.css";
         TranscriptionPanelComponent,
         RememberWordsComponent,
         FindWordComponent,
-        TestComponent
+        HomeComponent,
     ],
     providers: [ 
         CustomValidationService, 
-        ExchangeDataService 
+        ApiService 
     ],
     bootstrap: [AppComponent]
 })

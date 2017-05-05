@@ -1,44 +1,62 @@
 <div>
-    <div class="title-block">
-        <h1>Add new word</h1>
-    </div> 
-    <div class="new-word-form">
-        <form [formGroup]="wordForm" (ngSubmit)="$event.preventDefault(); addWord();"  novalidate>
-            <input type="text" class="form-control" placeholder="Word" formControlName="name">
-            <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
-                <div 
-                    *ngIf="wordForm.controls['name'].errors.required"
-                    class="alert alert-danger">Word is required.</div>
-            </div>     
-            <input type="text" class="form-control" placeholder="Transcription" formControlName="transcription">
-            <trascription-panel  (onChanged)="onChanged($event)"></trascription-panel>
-            <input type="text" class="form-control" placeholder="Translation" formControlName="translation">
-            <input type="text" class="form-control" placeholder="associations" formControlName="associate">
-            <input type="text" class="form-control" placeholder="Phrase" formControlName="phrase">
-            <label>Theme:
-                <select class="form-control" formControlName="theme_name">
-                    <option *ngFor="let theme of themesList" [value]="theme.name">{{theme.name}}</option>
-                </select>
+    <h4>Add new word</h4>
+</div>
+<div>
+    <form [formGroup]="wordForm" (ngSubmit)="$event.preventDefault(); addWord();"  novalidate>
+        <input type="text" class="form-control" placeholder="Word" formControlName="name">
+        <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
+            <div 
+                *ngIf="wordForm.controls['name'].errors.required"
+                class="alert alert-danger">Word is required.</div>
+        </div>     
+        <input type="text" (keydown)="addSymbolByKeypress($event)" class="form-control" placeholder="Transcription" formControlName="transcription">
+        <div class="transcription-panel" >
+            <trascription-panel (onChanged)="onChanged($event)"></trascription-panel>
+        </div>    
+        <input type="text" class="form-control" placeholder="Translation" formControlName="translation">
+        <input type="text" class="form-control" placeholder="Associations" formControlName="associate">
+        <input type="text" class="form-control" placeholder="Phrase" formControlName="phrase">
+        <div>
+            <select class="form-control" formControlName="theme_name">
+                <option value="" [selected]="true">Select the theme</option>
+                <option *ngFor="let theme of themesList" [value]="theme.name">{{theme.name}}</option>
+            </select>
+            <div *ngIf="wordForm.controls['theme_name'].touched && wordForm.controls['theme_name'].errors">
+            <div 
+                *ngIf="wordForm.controls['theme_name'].errors.required"
+                class="alert alert-danger">Theme is required.</div>
+            </div> 
+        </div>
+        <div class="col-sm-5 checkbox-wrap">
+            <label class="form-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" formControlName="share">
+                <span>share</span>
             </label>
-
-            <label for="share">share
-                <input type="text" class="form-control" formControlName="share" id="share">
+        </div>
+        <div class="col-sm-5 checkbox-wrap">
+            <label class="form-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" formControlName="learned">
+                <span>learned</span>
             </label>
-            <label for="learned">learned
-                <input type="checkbox" class="form-control" formControlName="learned" id="learned">
-            </label>
+        </div>    
+        <!--
             <div *ngIf="wordFromVocabulary">
                 <img src="{{word.image}}" alt="{{word.image}}">
-            </div>
-            <label>Image:
-                <img #image src="{{word?.image}}"><br>
-                <input type="file" class="btn btn-success" (change)="addImage($event)" placeholder="Upload image..." />
-            </label>  
+            </div> 
+        -->
+        <div>
+            <img #image src="{{word?.image}}" class="img-thumbnail img-responsive">
+            <input type="file" class="btn btn-default btn-file" (change)="addImage($event)">
+        </div>
+        <div>
+            <button type="reset" (click)="reset()"
+                [disabled]="wordForm.pristine" class="btn btn-danger btn-lg pull-right">Reset</button>
             <button type="submit" (click)="addWord()"
-                [disabled]="wordForm.pristine" class="btn btn-success">Save</button> &nbsp;
-            <button type="reset" (click)="cancel()"
-                [disabled]="wordForm.pristine" class="btn btn-danger">Cancel</button>
-        </form>
-    </div>
-</div>
-<p>Info: {{ wordForm.value | json}}</p>
+                [disabled]="wordForm.pristine" class="btn btn-success btn-lg pull-right">Save</button> 
+        </div>
+        <div *ngIf="message" class="col-sm-12 alert alert-warning pull-right" role="alert">
+            {{message}}
+        </div> 
+    </form>
+</div>    
+<!-- <p>Info: {{ wordForm.value | json}}</p> -->

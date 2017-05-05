@@ -1,12 +1,9 @@
-<navigation-menu class="navigation-block"></navigation-menu>
-
-<div class="title-block">
-    <p class="text-center large-txt">Vocabulary</p>
+<div>
+    <h4>Vocabulary</h4>
 </div> 
-
-<div class="vocabulary-block">
+<div>
     <div *ngFor="let word of userVocabulary" >
         <word [word]="word"></word> 
     </div>   
-    <pagination (onChanged)="onChanged($event)"></pagination>
+    <pagination [wordsCount]="wordsCount" (onChanged)="onChanged($event)"></pagination>
 </div>

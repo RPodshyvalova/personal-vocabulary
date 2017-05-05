@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <div class="panel-body">
+        <div *ngFor="let symbol of symbols; let myIndex = index" class="btn-group">
+            <span (click)="getSymbol(myIndex)" *ngIf="index == 3"  class="btn btn-default"><sub>{{symbol}}</sub></span>
+            <span (click)="getSymbol(myIndex)" *ngIf="index != 3"  class="btn btn-default"><sub>{{symbol}}</sub></span>
+        </div>
+    </div>     
+</div>    

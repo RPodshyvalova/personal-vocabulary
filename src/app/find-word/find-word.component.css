@@ -1,1 +1,11 @@
+input[type=radio] {
+  transform: scale(0.8);
+}
 
+.radio-wrap {
+  margin-top: 2%;  
+}
+
+.search-params {
+  margin-top: 2%;  
+}

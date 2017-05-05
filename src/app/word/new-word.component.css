@@ -1,15 +1,40 @@
-img {
-  width: 200px;   
-  height: 200px;
+.btn-file {
+  position: relative;
+  overflow: hidden;
 }
-.title-block {
-  width: 70%;  
-  text-align: center;
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
-.new-word-form {
-  width: 30%;
-  margin-left: 30%;
+
+button {
+  margin: 2%;
 }
-h1 {
-  font-size: 24px;  
+
+input, select, .transcription-panel {
+  margin-top: 2%;
+}
+
+input[type=file] {
+  width: 100%;  
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.checkbox-wrap {
+  margin: 4%;
 }

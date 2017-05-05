@@ -1,13 +1,16 @@
-<div class="login-block">
-    <div class="slogan-block ">
-        <p class="text-muted">Store your learning foreign words <br><span>in</span></p>
-        <p class="large-txt">your personal vocabulary</p>
-    </div>   
-    <div class="form-block">
+<div class="row title">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h4>Store your learning foreign words</h4> 
+        <h5>in</h5>
+        <h3>your personal vocabulary</h3>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
         <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="form-horizontal" novalidate>
-            <div class="form-group">
-                <label for="login" class="col-sm-4 control-label text-muted">Login</label>
-                <div class="col-sm-6">
+            <div class="form-group row">
+                <label for="login" class="col-sm-2 control-label text-muted">Login</label>
+                <div class="col-sm-8 col-sm-offset-2">
                     <input 
                         id="login" 
                         type="text" 
@@ -20,20 +23,20 @@
                         <div 
                             *ngIf="loginForm.controls['login'].errors.minlength"
                             class="alert alert-danger">
-                                Login length must be {{loginForm.controls['login'].errors.minlength.requiredLength}} or more symbols.
+                                Login length must be {{loginForm.controls["login"].errors.minlength.requiredLength}} or more symbols.
                         </div>
                         <div 
                             *ngIf="loginForm.controls['login'].errors.maxlength"
-                            class="alert alert-danger">Login length must be less than {{loginForm.controls['login'].errors.maxlength.requiredLength}} symbols.</div>    
+                            class="alert alert-danger">Login length must be less than {{loginForm.controls["login"].errors.maxlength.requiredLength}} symbols.</div>    
                         <div 
                             *ngIf="loginForm.controls['login'].errors.checkCorrectIdentifier"
                             class="alert alert-danger">Login contains wrong symbols.</div>    
                     </div>        
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password"  class="col-sm-4 control-label text-muted">Password</label>
-                <div class="col-sm-6">
+            <div class="form-group row">
+                <label for="password"  class="col-sm-2 control-label text-muted">Password</label>
+                <div class="col-sm-8 col-sm-offset-2">
                     <input 
                         id="password" 
                         type="password" 
@@ -44,19 +47,20 @@
                         class="alert alert-danger">Password is required.</div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-10">
+            <div class="form-group row">
+                <div class="col-sm-12">
                     <button type="submit" class="btn btn-primary btn-lg pull-right" [disabled]="!loginForm.valid">Login</button>
                 </div>
             </div>
+            <div *ngIf="message" class="col-sm-12 alert alert-warning pull-right" role="alert">
+                {{message}}
+            </div> 
         </form>
     </div>
-    <div class="registration-block col-sm-3 pull-right">
-        <a routerLink="/registration" class="text-danger">or Registration</a>
+</div>
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <a routerLink="/registration" class="text-danger pull-right">or Registration</a>
     </div>
-    
-    <div *ngIf="message">
-        {{message}}
-    </div>    
 </div>
     

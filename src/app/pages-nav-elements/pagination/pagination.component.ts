@@ -1,5 +1,5 @@
-import {Component, OnInit, AfterContentInit, EventEmitter, Output, Renderer} from '@angular/core';
-import {ExchangeDataService} from '../services/exchange-data.service';
+import {Component, OnInit, AfterContentInit, EventEmitter, Input, Output, Renderer} from '@angular/core';
+import {ApiService} from '../../services/api.service';
 
 @Component({
     selector: 'pagination',
@@ -12,14 +12,14 @@ export class PaginationComponent implements OnInit, AfterContentInit {
     private currentPage: number;
     private chunkOfPages: number;
     private pagesCount: number;
-    private wordsCount: number = 1;
     private fragment: number;
     private countWordsOnPage: number;
     private prevCurrentPage: number;
+    @Input() wordsCount: number;
     @Output() onChanged = new EventEmitter<number>();
     
     constructor(
-        private exchangeDataService: ExchangeDataService, 
+        private apiService: ApiService,
         private renderer: Renderer) {
     }
     
@@ -29,25 +29,20 @@ export class PaginationComponent implements OnInit, AfterContentInit {
         this.chunkOfPages = 1;
         this.currentPage = 1;
         this.prevCurrentPage = 1;
-        this.exchangeDataService.getWordsCountInVocabulary()
-            .subscribe(
-                data => {
-                    console.log("data " + data);
-                    this.wordsCount = data;
-                },
-                error  => console.log(<any>error)
-            );
+       
 //        this.wordsCount = 5005;
 //        this.wordsCount = 605;
-        this.pagesCount = Math.floor(this.wordsCount / this.countWordsOnPage); 
-          
-        if (this.wordsCount % this.countWordsOnPage> 0) {
-            this.pagesCount++;
-        }
-        if (this.pagesCount <= this.fragment) {
-            this.fillArrPagesWithInterval(1,this.pagesCount);
-        } else {
-            this.fillArrPagesWithInterval(1,this.fragment);
+        if (this.wordsCount > 0) {
+            this.pagesCount = Math.floor(this.wordsCount / this.countWordsOnPage); 
+
+            if (this.wordsCount % this.countWordsOnPage> 0) {
+                this.pagesCount++;
+            }
+            if (this.pagesCount <= this.fragment) {
+                this.fillArrPagesWithInterval(1,this.pagesCount);
+            } else {
+                this.fillArrPagesWithInterval(1,this.fragment);
+            }
         }
        
     }
@@ -67,7 +62,8 @@ export class PaginationComponent implements OnInit, AfterContentInit {
     moveForward() {
         if (this.pagesCount - this.chunkOfPages * this.fragment > 0 
             && this.pagesCount - (this.chunkOfPages + 1) * this.fragment > 0 )  {
-                this.fillArrPagesWithInterval(this.chunkOfPages * this.fragment, this.chunkOfPages * this.fragment + this.fragment);
+                this.fillArrPagesWithInterval(this.chunkOfPages * this.fragment, 
+                    this.chunkOfPages * this.fragment + this.fragment);
                 this.chunkOfPages++;   
         } else {
             this.fillArrPagesWithInterval(this.chunkOfPages * this.fragment, this.pagesCount); 
@@ -78,7 +74,8 @@ export class PaginationComponent implements OnInit, AfterContentInit {
         if (this.chunkOfPages > 0) {
             this.chunkOfPages--;
             if (this.chunkOfPages !== 0) {
-                this.fillArrPagesWithInterval(this.chunkOfPages * this.fragment, this.chunkOfPages * this.fragment + this.fragment);
+                this.fillArrPagesWithInterval(this.chunkOfPages * this.fragment, 
+                    this.chunkOfPages * this.fragment + this.fragment);
             } else {
                 this.fillArrPagesWithInterval(1, this.chunkOfPages * this.fragment + this.fragment);  
             }
@@ -91,8 +88,8 @@ export class PaginationComponent implements OnInit, AfterContentInit {
 
 //        let spanElement = this.renderer.selectRootElement("span");
 //        this.renderer.setElementStyle(spanElement, "backgroundColor", "green");
-        this.renderer.setElementStyle(event.target, "backgroundColor", "gray");
-        this.colorizePageElement(this.prevCurrentPage, "#dddddd");
+        this.renderer.setElementStyle(event.target, "backgroundColor", "#b3d9ff");
+        this.colorizePageElement(this.prevCurrentPage, "white");
         this.prevCurrentPage = this.currentPage;
 //        this.renderer.setElementClass(event.target as Element, "red-text", true);
         

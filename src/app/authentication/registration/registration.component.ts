@@ -1,27 +1,25 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-
-import {CustomValidationService} from "../services/custom-validation.service";
-import {ExchangeDataService} from "../services/exchange-data.service";
+import {CustomValidationService} from "../custom-validation.service";
+import {ApiService} from '../../services/api.service';
 
 @Component({
     selector: "registration-form",
     templateUrl: "registration.component.html",
-    styleUrls: ["registration.component.css"]
+    styleUrls: ["registration.component.css"],
 })
 
 export class RegistrationComponent implements OnInit {
+    private url: string = "/api/v1/registration";
     private registrationForm: FormGroup;
-
+    private message: string = "";
+    
     constructor(
         private fb: FormBuilder, 
         private router: Router, 
-        private customValidationService: CustomValidationService,
-        private exchangeDataService: ExchangeDataService) {
+        private apiService: ApiService,
+        private customValidationService: CustomValidationService) {
     }
   
     ngOnInit(): void {
@@ -54,19 +52,23 @@ export class RegistrationComponent implements OnInit {
             
         });
     }
-
+    
     registerUser() {
         let formValuesObj = this.registrationForm.value;
         let body = JSON.stringify(formValuesObj).replace('"passwordgroup":{',"").replace(/}\s*$/, "");
-        this.exchangeDataService.askServerRegisterUser(body)
+   
+        this.apiService.post(this.url, body)
             .subscribe(
                 (data: any) => {                   
-                    console.log(data.message);
                     if (data.message === "Success") {
                         this.router.navigate(["/login"]);
+                    } else {
+                        this.message = JSON.stringify(data.message); 
                     }
                 },
-                (error: any) => console.log(<any>error)
+                (error: any) => { 
+                    this.message = "Incorrect input data";
+                }
             );
     }
 }

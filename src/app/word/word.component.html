@@ -1,4 +1,4 @@
-<div class="word-block">
+<div class="row">        
     <form [formGroup]="wordForm">
         <input type="text" class="form-control word" formControlName="name">
         <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
@@ -33,15 +33,14 @@
             <div>
                 <button type="button" (click)="editWord($event);"
                     class="btn btn-success">Edit</button> &nbsp;
-                <button type="button" (click)="saveChanges($event);"
+                <button type="button" (click)="changeWord($event);"
                     class="btn btn-success">Save</button> &nbsp;
                 <button type="button" (click)="deleteWord($event);"
                     class="btn btn-danger">Delete</button>
             </div>   
         </span>
         <div class="more-info" (click)="toggle()">
-            <i 
-                class="pull-right glyphicon" 
+            <i class="pull-right glyphicon" 
                 [ngClass]="
                     { 
                         'glyphicon-chevron-down': !showDescriptionOfWord, 
@@ -50,5 +49,5 @@
             </i>
         </div>    
     </form>
-    <p>Info: {{ wordForm.value | json}}</p>
-</div>
+</div>  
+<!-- <p>Info: {{ wordForm.value | json}}</p>  -->

@@ -1,0 +1,12 @@
+<div>
+    <h4>Notice list of words on {{currentDate | date: 'dd.MM.yyyy'}}</h4>
+</div> 
+<div>
+    <!-- <input type="date" data-date-inline-picker="false" data-date-open-on-focus="true"> -->
+    <!-- <h6>{{currentDate | date: 'dd/MM/yyyy'}}</h6> -->
+    <div>
+        <ul *ngFor="let word of userRememberWords">
+            <li><word [word]="word"></word></li>
+        </ul>   
+    </div>
+</div>
