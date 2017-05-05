@@ -1,36 +1,62 @@
-.word-block {
-  border: 1px solid lightgray;
-  margin-top: 10px;
-}
 .word {
-  width: 25%;
   color: lightgreen;
-  margin: 10px;
 }
+
 .translation {
-  width: 25%;
   color: orange; 
-  margin: 10px;
 }
+
 .transcription {
-  width: 25%;
   color: darkgray; 
-  margin: 10px;
 }
-img {
-  width: 200px;  
-  height: 200px;
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
 }
-.share{
-  width: 25%; 
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
-.learned {
-  width: 25%;  
+
+button {
+  margin: 2%;
 }
-.image{
+
+input, select, .transcription-panel {
+  margin-top: 2%;
+}
+
+input[type=file] {
   width: 100%;  
 }
-.more-info{
-  width: 100%;  
-  background: lightgray;
+
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.checkbox-wrap {
+  margin: 4%;
+}
+
+form {
+  margin-top: 10px;  
+  border-bottom: 1px darkgray solid; 
+  padding: 20px;
+}
+
+i {
+  color: lightblue;  
 }

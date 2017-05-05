@@ -8,7 +8,7 @@ import {Component} from "@angular/core";
                 <div class="col-sm-2 col-sm-offset-1">
                     <router-outlet  name="menu"></router-outlet>
                 </div>
-                <div class="col-sm-5 col-sm-offset-1">
+                <div class="col-sm-8 col-sm-offset-1">
                     <router-outlet  name="context"></router-outlet>
                 </div> 
             </div>    
