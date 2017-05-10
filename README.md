@@ -31,8 +31,10 @@ Executors
 Back-end: Volodya Bezpalchuk, Olya Bezpalchuk
 Front-end: Ruslana Podshyvalova
 
-Hope to do
+To do list
 1)make modules word.module.ts and vocabulary.module
 2)colorize elements html in pagination component do like an  element's style
 3)colorize elements html in navigation component, do like an element's style
 4)validation do like separate component
+5)deploy project to github pages
+6)fixed bugs 
