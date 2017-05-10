@@ -1,6 +1,6 @@
 import {Component, OnInit, Input,  ElementRef, ViewChild} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {Subscription} from 'rxjs/Rx';
+import {Router} from "@angular/router";
 import {Word} from "../models/word";
 import {ApiService} from '../services/api.service';
 
@@ -14,15 +14,16 @@ export class WordComponent implements OnInit {
     private url: string;
     private wordForm: FormGroup;
     private showDescriptionOfWord: boolean = false;
-    private filesToUpload: Array<File>;
+    private filesToUpload: Array<File> = [];
     private formData: FormData;
-    private imageLikeBase64: string = ""; 
-    private subscription: Subscription;
+    private imageLikeBase64: string = "";
+    private message: string; 
     @ViewChild("image") image: ElementRef;
     @Input() word: Word;
     
     constructor(
         private fb: FormBuilder, 
+        private router: Router,
         private apiService: ApiService) {
     }
     
@@ -78,15 +79,22 @@ export class WordComponent implements OnInit {
             "learned": this.wordForm.get("learned").value,
             "theme_name": this.wordForm.get("theme_name").value,
             "image": {
-                    "filename": this.filesToUpload[0].name, 
+                    "filename": this.filesToUpload.length > 0  ? this.filesToUpload[0].name : "", 
                     "data": this.imageLikeBase64.length > 0 ? this.imageLikeBase64 : ""
                 }
             };
 
-        this.subscription = this.apiService.post(this.url, JSON.stringify(wordObj))
+        this.apiService.post(this.url, JSON.stringify(wordObj))
             .subscribe(
                 (data: any) => {
-                    console.log(data);
+                    if (data.message === "Success") {
+                        this.message = "Success. Information has been changed.";
+                        setTimeout(() => {
+                            this.message = "";
+                            this.setDisableFormElements();
+                        }, 2000);
+                       
+                    }
                 },
                 (error: any)  => console.log(<any>error)
             ); 
@@ -114,10 +122,16 @@ export class WordComponent implements OnInit {
         event.stopPropagation();
         let wordName = this.wordForm.get("name").value; 
         this.url = `/api/v1/words/delete?name=${wordName}`;
-        this.subscription = this.apiService.del(this.url) 
+        this.apiService.del(this.url) 
             .subscribe(
                 (data: any) => {
-                    console.log(data);
+                    if (data.message) {
+                        this.message = "Success. Information has been deleted.";
+                        setTimeout(() => {
+                            this.message = "";
+                            this.router.navigate(['/personal-vocabulary', { outlets: {'menu':['menu'],'context': ['personal-vocabulary'] }}]);
+                        }, 2000);
+                    }
                 },
                 (error: any)  => console.log(<any>error)
             );      

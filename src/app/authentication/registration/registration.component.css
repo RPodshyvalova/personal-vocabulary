@@ -18,3 +18,7 @@ button {
 .title {
   margin-top: 10%;     
 }
+
+.required-field {
+  border-left: 2px brown solid;  
+}

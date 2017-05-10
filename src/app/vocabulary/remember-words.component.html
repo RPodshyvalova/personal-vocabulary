@@ -5,8 +5,8 @@
     <!-- <input type="date" data-date-inline-picker="false" data-date-open-on-focus="true"> -->
     <!-- <h6>{{currentDate | date: 'dd/MM/yyyy'}}</h6> -->
     <div>
-        <ul *ngFor="let word of userRememberWords">
-            <li><word [word]="word"></word></li>
-        </ul>   
+        <div *ngFor="let word of userRememberWords">
+            <word [word]="word"></word>
+        </div>   
     </div>
 </div>

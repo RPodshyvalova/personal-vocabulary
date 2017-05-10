@@ -13,3 +13,7 @@ input[type=radio] {
 .word {
   margin-top: 5%; 
 }
+
+.alert {
+  margin-top: 2%;  
+}

@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
     template: `
         <div class="container">
             <div class="row">
-                <div class="col-sm-2 col-sm-offset-1">
+                <div class="col-sm-2">
                     <router-outlet  name="menu"></router-outlet>
                 </div>
                 <div class="col-sm-8 col-sm-offset-1">

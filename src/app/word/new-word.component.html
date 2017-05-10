@@ -1,11 +1,11 @@
+<div>
+    <h4>Add new word</h4>
+</div>
 <div class="row">
-    <div class="col-sm-5 col-sm-offset-1">
+    <div  class="col-sm-8">
         <div>
-            <h4>Add new word</h4>
-        </div>
-        <div>
-            <form [formGroup]="wordForm" (ngSubmit)="$event.preventDefault(); addWord();"  novalidate>
-                <input type="text" class="form-control" placeholder="Word" formControlName="name">
+            <form [formGroup]="wordForm"  novalidate>
+                <input type="text" class="form-control required-field" placeholder="Word" formControlName="name">
                 <div *ngIf="wordForm.controls['name'].touched && wordForm.controls['name'].errors">
                     <div 
                         *ngIf="wordForm.controls['name'].errors.required"
@@ -19,9 +19,9 @@
                 <input type="text" class="form-control" placeholder="Associations" formControlName="associate">
                 <input type="text" class="form-control" placeholder="Phrase" formControlName="phrase">
                 <div>
-                    <select class="form-control" formControlName="theme_name">
-                        <option value="" [selected]="true">Select the theme</option>
-                        <option *ngFor="let theme of themesList" [value]="theme.name">{{theme.name}}</option>
+                    <select class="form-control required-field" formControlName="theme_name">
+                        <option value="" [selected]="true">Select the theme, its required</option>
+                        <option *ngFor="let theme of themesList" [value]="theme.name">{{theme?.name}}</option>
                     </select>
                     <div *ngIf="wordForm.controls['theme_name'].touched && wordForm.controls['theme_name'].errors">
                     <div 

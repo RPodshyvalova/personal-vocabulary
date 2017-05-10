@@ -1,8 +1,8 @@
+<div>
+    <h4>Find word</h4>
+</div> 
 <div class="row">
     <form [formGroup]="findForm" (ngSubmit)="findWord()">
-        <div class="col-sm-7">
-            <h4>Find word</h4>
-        </div> 
         <div class="col-sm-7 input-group add-on">
             <input id="word" type="text" class="form-control" formControlName="word" placeholder="Search">
             <div class="input-group-btn">
@@ -33,7 +33,10 @@
         </div>
         -->
     </form>
-    <div *ngFor="let word of findVocabulary" class="col-sm-10 word">
+    <div *ngFor="let word of findVocabulary" class="word">
         <word [word]="word"></word> 
     </div>
+    <div *ngIf="message" class="col-sm-12 alert alert-warning pull-right" role="alert">
+        {{message}}
+    </div> 
 </div>

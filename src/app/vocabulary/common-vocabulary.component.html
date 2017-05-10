@@ -4,6 +4,9 @@
 <div>
     <div *ngFor="let word of commonVocabulary" >
         <word [word]="word"></word> 
-    </div>   
-    <pagination [wordsCount]="wordsCount" (onChanged)="onChanged($event)"></pagination>
+    </div> 
+    <div *ngIf="message" class="col-sm-12 alert alert-warning pull-right" role="alert">
+        {{message}}
+    </div> 
+    <pagination class="col-sm-6 col-sm-offset-2" [wordsCount]="wordsCount" (onChanged)="onChanged($event)"></pagination>
 </div>

@@ -4,6 +4,7 @@ import {Word} from "../models/word";
 import {Theme} from "../models/theme";
 import {Router} from "@angular/router";
 import {ApiService} from "../services/api.service";
+import {WordService} from "./word.service";
 
 @Component({
     selector: "new-word",
@@ -17,7 +18,7 @@ export class NewWordComponent implements OnInit {
     private newWord: boolean;
     private wordFromVocabulary: boolean;
     private themesList: Theme[];
-    private filesToUpload: Array<File>;
+    private filesToUpload: Array<File> = [];
     private formData: FormData = new FormData();
     private transcriptionStr: string = "";
     private imageLikeBase64: string = ""; 
@@ -27,6 +28,7 @@ export class NewWordComponent implements OnInit {
     constructor(
         private fb: FormBuilder, 
         private apiService: ApiService,
+//        private wordService: WordService,
         private router: Router) {
     }
     
@@ -73,7 +75,7 @@ export class NewWordComponent implements OnInit {
     }
     
     addWord(): void {
-//        console.log(JSON.stringify(this.wordForm.value));
+        console.log(JSON.stringify("add word " + this.wordForm.value));
         this.url = "/api/v1/words/new";
         let wordObj  =  { 
             "name": this.wordForm.get("name").value,
@@ -85,7 +87,7 @@ export class NewWordComponent implements OnInit {
             "learned": this.wordForm.get("learned").value,
             "theme_name": this.wordForm.get("theme_name").value,
             "image": {
-                    "filename": this.filesToUpload[0].name, 
+                    "filename": this.filesToUpload.length > 0  ? this.filesToUpload[0].name : "", 
                     "data": this.imageLikeBase64.length > 0 ? this.imageLikeBase64 : ""
                 }
             };    

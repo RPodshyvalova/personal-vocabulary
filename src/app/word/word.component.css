@@ -60,3 +60,7 @@ form {
 i {
   color: lightblue;  
 }
+
+.form-control {
+  background-color: #f8f8f8;  
+}

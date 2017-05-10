@@ -6,7 +6,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable() 
 export class ApiService {
     private headers: Headers;
-    private baseUrl: string = 'http://personal-vocabulary-v3.herokuapp.com';
+    private baseUrl: string = "https://personal-vocabulary-beta.herokuapp.com";
+//    private baseUrl: string = "http://personal-vocabulary-v3.herokuapp.com";
     private token: string;
     
     constructor (private http: Http) {

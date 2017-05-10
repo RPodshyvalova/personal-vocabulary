@@ -7,7 +7,6 @@ import {PersonalVocabularyComponent} from "./vocabulary/personal-vocabulary.comp
 import {CommonVocabularyComponent} from "./vocabulary/common-vocabulary.component";
 import {NewWordComponent} from "./word/new-word.component";
 import {RememberWordsComponent} from "./vocabulary/remember-words.component";
-//import {TestComponent} from "./test/test.component";
 import {HomeComponent} from "./home/home.component";
 import {FindWordComponent} from "./find-word/find-word.component";
 import {NavigationComponent} from "./pages-nav-elements/navigation/navigation.component";
@@ -21,7 +20,6 @@ const routes: Routes = [
 //    { path: "add-word", component: NewWordComponent},
 //    { path: "remember-words", component: RememberWordsComponent},
 //    { path: "find-word", component: FindWordComponent},
-//    { path: "test", component: TestComponent},
     
     {path: 'personal-vocabulary', component: HomeComponent,
         children: [

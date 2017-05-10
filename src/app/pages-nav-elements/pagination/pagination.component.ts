@@ -30,9 +30,11 @@ export class PaginationComponent implements OnInit, AfterContentInit {
         this.currentPage = 1;
         this.prevCurrentPage = 1;
        
+//        console.log("this.wordsCount is " + this.wordsCount);
 //        this.wordsCount = 5005;
 //        this.wordsCount = 605;
-        if (this.wordsCount > 0) {
+
+        if (this.wordsCount && this.wordsCount > 0) {
             this.pagesCount = Math.floor(this.wordsCount / this.countWordsOnPage); 
 
             if (this.wordsCount % this.countWordsOnPage> 0) {

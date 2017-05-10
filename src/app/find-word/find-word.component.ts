@@ -11,11 +11,11 @@ import {Word} from "../models/word";
 
 export class FindWordComponent implements OnInit{
     private url: string;
-    private subscription: any;
     private findForm: FormGroup;  
     private findVocabulary: Word[]; 
     private wordsParamsObj: any = {};
-    
+    private message: string;
+        
     constructor(
         private fb: FormBuilder, 
         private apiService: ApiService) {
@@ -41,6 +41,7 @@ export class FindWordComponent implements OnInit{
     }
     
     findWord() {
+        this.findVocabulary = [];
         let formValuesObj = this.findForm.value;
         let language = this.defineWordsLang(formValuesObj.word);
         this.wordsParamsObj = {
@@ -57,7 +58,11 @@ export class FindWordComponent implements OnInit{
                     if (data && (data as Word[]).length > 0 ) {
                         this.findVocabulary = data as Word[];
                     } else {
-                       console.log("FindWordComponent findVocabulary empty");    
+                        this.message = "Sorry, the word hasn't been found.";  
+                        setTimeout(() => {
+                            this.message = "";
+                            this.findForm.controls["word"].setValue("");
+                        }, 4000);
                     }
                   },
                 (error: any) => console.log(<any>error)

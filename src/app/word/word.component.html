@@ -53,7 +53,10 @@
                             'glyphicon-chevron-up': showDescriptionOfWord 
                         }">
                 </i>
-            </div>    
+            </div>
+            <div *ngIf="message" class="col-sm-12 alert alert-warning pull-right" role="alert">
+                {{message}}
+            </div> 
         </form>
     </div>    
 </div>  

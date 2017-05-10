@@ -22,7 +22,7 @@ export class RememberWordsComponent implements OnInit {
     }
 
     getSetOfWordsToRepeat() {
-        this.url = `/api/v1/words/notice?currentDate=${this.currentDate.toLocaleDateString()}`;   
+        this.url = `/api/v1/words/notifier?date=${this.currentDate.toLocaleDateString('en-GB')}`; 
         this.apiService.get(this.url)
             .subscribe(
                 (data: any) => {                    

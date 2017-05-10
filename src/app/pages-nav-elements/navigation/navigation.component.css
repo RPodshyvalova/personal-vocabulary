@@ -12,6 +12,11 @@ a {
 }
 
 .active-link {
-  background: #b3d9ff;   
+  background-color: #b3d9ff;   
   color: darkslategray;
+}
+
+.btn {
+   background-color: #f8f8f8;
+   color: lightblue;  
 }

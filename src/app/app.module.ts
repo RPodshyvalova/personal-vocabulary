@@ -16,6 +16,8 @@ import {HomeComponent} from "./home/home.component";
 
 import {CustomValidationService} from "./authentication/custom-validation.service";
 import {ApiService} from "./services/api.service";
+import {VocabularyService} from './vocabulary/vocabulary.service';
+import {WordService} from './word/word.service';
  
 import {HttpModule} from "@angular/http";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -43,11 +45,13 @@ import "bootstrap/dist/css/bootstrap.css";
         TranscriptionPanelComponent,
         RememberWordsComponent,
         FindWordComponent,
-        HomeComponent,
+        HomeComponent
     ],
     providers: [ 
         CustomValidationService, 
-        ApiService 
+        ApiService,
+        VocabularyService,
+        WordService
     ],
     bootstrap: [AppComponent]
 })

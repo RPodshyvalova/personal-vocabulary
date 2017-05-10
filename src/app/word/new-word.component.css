@@ -38,3 +38,7 @@ input[type=checkbox] {
 .checkbox-wrap {
   margin: 4%;
 }
+
+.required-field {
+  border-left: 2px brown solid;  
+}

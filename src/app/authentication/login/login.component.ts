@@ -55,7 +55,10 @@ export class LoginComponent implements OnInit {
                        this.message = data.body;
                     }
                 },
-                (error: any) => console.log(<any>error)
+                (error: any) => {
+                    console.log(<any>error);
+                    this.message = "Error!" + <any>error;
+                }
             );
     }
 }

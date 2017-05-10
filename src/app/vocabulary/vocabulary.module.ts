@@ -1,26 +1,11 @@
-import { Injectable} from "@angular/core";
-import {Word} from "../models/word";
-import {ApiService} from "../services/api.service"; 
+import {NgModule} from "@angular/core";
 
 @NgModule({
-    declarations: [],
-    exports: []
+    imports:      [ ],
+    declarations: [ ],
+    bootstrap:    [ ],
+    exports:      [ ],
+    providers:    [ ]
 })
-export class VocabularyModule {
-    constructor(private apiService: ApiService) {
-    }
-
-    getSetOfWords(url: string): any { 
-        let vocabulary: Word[] = [];
-        this.apiService.get(url)
-            .subscribe(
-                (data: any) => {                   
-                    if (data && (data as Word[]).length > 0 ) {
-                        vocabulary = data as Word[];
-                    }
-                },
-                (error: any)  => {console.log(<any>error);}
-            ); 
-        return vocabulary;    
-    }
+export class VocabularyModule {   
 }
